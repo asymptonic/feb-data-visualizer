@@ -273,7 +273,6 @@
 						{:else if dataset.datapoints}
 							{@const distance = distanceFromDataset(dataset)}
 							{@const acceleration = accelerationFromDataset(dataset)}
-							{$inspect(acceleration)}
 							{@const plottingDatapoints = dataset.datapoints.map((datapoint, index) =>
 								property === ':Distance_Traveled'
 									? {
@@ -301,7 +300,7 @@
 											value: datapoint[property]
 										}))
 									)
-								}))}
+							}))}
 
 							<div>
 								<div class="mb-5 flex items-center gap-3 font-bold">
