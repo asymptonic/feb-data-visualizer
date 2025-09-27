@@ -7,13 +7,14 @@
 	import type { BoardsRecord, BoardsResponse } from '$lib/types/db';
 	import { cn } from '$lib/utils';
 	import type { LineSeriesOption } from 'echarts';
-	import { Activity, Loader, Zap } from 'lucide-svelte';
+	import { Loader, Zap } from 'lucide-svelte';
 	import { toast } from 'svelte-sonner';
 	import BoardsList from './BoardsList.svelte';
 	import DataChart from './DataChart.svelte';
 	import MakeCopyButton from './MakeCopyButton.svelte';
 	import { onNavigate } from '$app/navigation';
 	import Input from '$lib/components/ui/input/input.svelte';
+	import Activity from '@lucide/svelte/icons/activity';
 
 	let board = useRecord<
 		BoardsResponse<{
@@ -224,7 +225,7 @@
 	{@const dataset = data.datasets[board.record.data]}
 	{#if typeof dataset != 'string'}
 		<div class="gird fixed bottom-0 z-50 place-items-center p-10">
-			<div class="border bg-background border-[#FDB515]">
+			<div class="border border-[#FDB515] bg-background">
 				<Select.Root
 					type="multiple"
 					bind:value={board.record.view.properties_visible}
