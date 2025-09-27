@@ -259,6 +259,32 @@
 		<div class="flex flex-col gap-5">
 			{#if board.record?.view && data.datasets[board.record.data]}
 				{@const dataset = data.datasets[board.record.data]}
+				{@const comparisonDatasets = board.record.compare
+					.map((comparisonFileId) => data.datasets[comparisonFileId])
+					.filter((d) => !!d)}
+				<div class="border p-5">
+					<div class="mb-5 flex items-center gap-3 font-bold">
+						<Activity />
+						Analysis Result
+					</div>
+					<div class="grid gap-5" style="grid-template-columns: auto 1fr;">
+						{#if typeof dataset !== 'string'}
+							<div class="text-right">{dataset.name}</div>
+							<div class="font-mono text-sm whitespace-pre">
+								{JSON.stringify(dataset.record.analysis, null, 2)}
+							</div>
+						{/if}
+						{#each comparisonDatasets as comparisionDataset}
+							{#if typeof comparisionDataset !== 'string'}
+								<div class="text-right">{comparisionDataset.name}</div>
+								<div class="font-mono text-sm whitespace-pre">
+									{JSON.stringify(comparisionDataset.record.analysis, null, 2)}
+								</div>
+							{/if}
+						{/each}
+					</div>
+				</div>
+
 				{#each board.record.view.properties_visible as property}
 					<div
 						class={cn(
@@ -300,7 +326,7 @@
 											value: datapoint[property]
 										}))
 									)
-							}))}
+								}))}
 
 							<div>
 								<div class="mb-5 flex items-center gap-3 font-bold">

@@ -27,8 +27,10 @@ export type DataStore = {
 					name: string;
 					fileName: string;
 					datapoints: Datapoint[];
+					record: FilesResponse;
 			  }
-			| 'fetching' | 'missing';
+			| 'fetching'
+			| 'missing';
 	};
 };
 
@@ -46,16 +48,24 @@ export async function loadUploadedCSV(fileid: string) {
 			toast.error(JSON.stringify(e));
 			return undefined;
 		});
-	if (!fileRecord) return data.datasets[fileid] = 'missing';;
+	if (!fileRecord) return (data.datasets[fileid] = 'missing');
 
 	const csvString = await ky(pb.files.getURL(fileRecord, fileRecord.file)).text();
 	const { data: parsedCSV, errors } = Papa.parse<Datapoint>(csvString, { header: true });
 	// if (errors) return toast.error(JSON.stringify(errors));
 
+	let record = $state(fileRecord);
+
+	pb.collection('files').subscribe('*', (e) => {
+		if (e.action !== 'update') return;
+		record = e.record;
+	});
+
 	data.datasets[fileRecord.id] = {
 		id: fileRecord.id,
 		name: fileRecord.name,
 		fileName: fileRecord.file,
-		datapoints: parsedCSV
+		datapoints: parsedCSV,
+		record
 	};
 }

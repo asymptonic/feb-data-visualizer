@@ -104,7 +104,8 @@ export type BoardsRecord<Tview = unknown> = {
 	view: null | Tview
 }
 
-export type FilesRecord = {
+export type FilesRecord<Tanalysis = unknown> = {
+	analysis?: null | Tanalysis
 	created?: IsoDateString
 	file: string
 	id: string
@@ -141,7 +142,7 @@ export type MfasResponse<Texpand = unknown> = Required<MfasRecord> & BaseSystemF
 export type OtpsResponse<Texpand = unknown> = Required<OtpsRecord> & BaseSystemFields<Texpand>
 export type SuperusersResponse<Texpand = unknown> = Required<SuperusersRecord> & AuthSystemFields<Texpand>
 export type BoardsResponse<Tview = unknown, Texpand = unknown> = Required<BoardsRecord<Tview>> & BaseSystemFields<Texpand>
-export type FilesResponse<Texpand = unknown> = Required<FilesRecord> & BaseSystemFields<Texpand>
+export type FilesResponse<Tanalysis = unknown, Texpand = unknown> = Required<FilesRecord<Tanalysis>> & BaseSystemFields<Texpand>
 export type ProjectsResponse<Texpand = unknown> = Required<ProjectsRecord> & BaseSystemFields<Texpand>
 export type UsersResponse<Texpand = unknown> = Required<UsersRecord> & AuthSystemFields<Texpand>
 
